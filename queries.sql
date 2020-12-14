@@ -58,11 +58,18 @@ ORDER BY All_Courses_Offered.course_id, Students.last_name;
 SELECT SUM(Employees.salary), Employees.sex
 FROM Employees
 GROUP BY Employees.sex;
+
+--Find out how much money the college is paying employees, serperate by sex and employee_type, give a count of employees by sex
+SELECT Employees.employee_type, Employees.sex, SUM(Employees.salary) AS sum_of_all_salaries, COUNT(Employees.sex) AS number_of_employees
+FROM Employees
+GROUP BY Employees.employee_type , Employees.sex;
+
 --Find out the number of students that are taking or have taken the Graphic Design Major
 SELECT COUNT(Students.student_id), Students.status
 FROM Students
 WHERE Students.major_id = 1
 GROUP BY Students.status;
+
 --Find all majors and minors for the School of Theatre & Dance
 SELECT College_Branchs.branch_name, Majors.major_name, Minors.minor_name
 FROM College_Branchs
@@ -71,3 +78,8 @@ ON College_Branchs.branch_id = Majors.branch_id
 INNER JOIN Minors
 ON College_Branchs.branch_id = Minors.branch_id
 WHERE College_Branchs.branch_id = 4;
+
+--Find out how many credits hours a student has failed by only using Students table
+SELECT CONCAT(Students.last_name,', ',Students.first_name) AS students_name, (Students.credits_attempted - Students.credits_earned) AS failed_credits
+FROM Students
+ORDER BY students_name;
